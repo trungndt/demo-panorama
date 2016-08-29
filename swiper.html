@@ -1,0 +1,105 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+
+<head>
+  <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+  <title></title>
+  <meta name="viewport" content="width=device-width, initial-scale=1, minimum-scale=1, user-scalable=no">
+  <link rel="stylesheet" href="vendors/swiper/css/swiper.min.css">
+  <link rel="stylesheet" href="css/style.css" type="text/css" />
+  <style>
+  .swiper-slide {
+    width: auto;
+  }
+  
+  .swiper-wrapper {
+    width: auto;
+  }
+  </style>
+</head>
+
+<body>
+  <div class="swiper-container">
+    <div class="swiper-wrapper">
+      <div class="swiper-slide"><img src="img/room.jpg"></div>
+      <a class="spot" data-x="300" data-y="300"></a>
+      <a class="spot" data-x="600" data-y="400"></a>
+      <a class="spot" data-x="900" data-y="420"></a>
+    </div>
+    <!-- Add Pagination -->
+  </div>
+  <div class="hand-phone">
+    <div class="hand"></div>
+    <div class="phone"></div>
+  </div>
+  <!--  <div class="pano-container">
+    <div id="pano"></div>
+    <div class="hand-phone">
+      <div class="hand"></div>
+      <div class="phone"></div>
+    </div>
+  </div> -->
+  <script src="js/jquery-1.12.4.min.js"></script>
+  <script src="vendors/classList/classList.min.js"></script>
+  <script src="vendors/bootstrap/js/bootstrap.min.js"></script>
+  <script src="vendors/swiper/js/swiper.min.js"></script>
+  <script>
+  var $handPhone = $('.hand-phone'),
+  $panorama = $('.swiper-slide');
+  $('.spot').click(function() {
+    $panorama.addClass('blur');
+    $handPhone.addClass('active');
+    // $handPhone.find('.phone').css('background-image', 'url(' + hotspot.value + ')');
+
+  });
+    $handPhone.on({
+    'click': function(e) {
+      var $me = $(this);
+      // Trigger event start
+      $me.trigger('moveout.start');
+      // Execute
+      $me.removeClass('active');
+      $panorama.removeClass('blur');
+      // Trigger event complete
+      setTimeout(function() {
+        $me.trigger('moveout.complete');
+      }, 300);
+
+    },
+    'moveout.start': function(e) {
+      // console.log('moveout.start');
+    },
+    'moveout.complete': function(e) {
+      // console.log('moveout.complete');
+    }
+  });
+
+  var swiper = new Swiper('.swiper-container', {
+    slidesPerView: 'auto',
+    spaceBetween: 0,
+    freeMode: true,
+    loop: false,
+    onTouchMove: function(swiper, event) {
+      // console.log(swiper);
+    }
+  });
+
+  var setupSpot = function() {
+    var BASE_HEIGHT = 768,
+      currHeight = $(window).height(),
+      aspectRatio = currHeight / BASE_HEIGHT;
+    $.each($('.spot'), function(i, e) {
+      spotOriginalPosition = {
+        x: parseInt($(e).attr('data-x')),
+        y: parseInt($(e).attr('data-y'))
+      };
+
+      $(e).css('left', spotOriginalPosition.x * aspectRatio);
+      $(e).css('top', spotOriginalPosition.y * aspectRatio);
+    });
+  }
+  setupSpot();
+  </script>
+</body>
+
+</html>

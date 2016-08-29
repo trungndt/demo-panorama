@@ -1,0 +1,75 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+
+<head>
+  <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+  <title></title>
+  <meta name="viewport" content="width=device-width, initial-scale=1, minimum-scale=1, maximum-scale=2.0">
+  <link rel="stylesheet" href="vendors/paver/css/paver.min.css">
+  <link rel="stylesheet" href="css/style.css" type="text/css" />
+</head>
+
+<body>
+  <div class="panorama">
+    <img src="img/aus.jpg">
+    <a class="spot" href="#" data-x="670" , data-y="270"></a>
+    <a class="spot" href="#" data-x="1300" , data-y="300"></a>
+  </div>
+  <script src="js/jquery-1.12.4.min.js"></script>
+  <script src="vendors/paver/js/jquery.ba-throttle-debounce.min.js"></script>
+  <script src="vendors/paver/js/prism.min.js"></script>
+  <script type="text/javascript" src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+  <script src="vendors/paver/js/jquery.paver.min.js"></script>
+  <script>
+  $('.panorama').paver({
+    // cursorThrottle: 1,
+    // mouseSmoothingFunction: 'linear',
+    startPosition: 0,
+    mouseSmoothingFunction: function(deltaX, thresholdX, deltaY, thresholdY) {
+
+      var x, y;
+      x = 0.5 * (deltaX / thresholdX + 1);
+      y = 0.5 * (deltaY / thresholdY + 1);
+
+      var pos = {
+        x: x,
+        y: y
+      };
+
+      var imgWidth = 700 / 3280 * 13222;
+      // console.log(imgWidth);
+
+      $.each($('.spot'), function(i, e) {
+        spotOriginalPosition = {
+          x: parseInt($(e).attr('data-x')),
+          y: parseInt($(e).attr('data-y'))
+        };
+        var matrix = $('.paver__pano').css('transform').replace('matrix(', '').replace(')', '').split(',');
+        var transformVal = parseInt(matrix[4]);
+        console.log(transformVal);
+        var leftPos = spotOriginalPosition.x + transformVal;
+        // var leftPos = spotOriginalPosition.x - (thresholdX + deltaX);
+        // var leftPos = spotOriginalPosition.x;
+        $(e).css('left', leftPos);
+        $(e).css('top', spotOriginalPosition.y);
+      });
+
+      // console.log(deltaX + ' / ' + thresholdX);
+      // console.log(pos);
+      return pos;
+    }
+  }).on('ready.paver', function() {
+    $.each($('.spot'), function(i, e) {
+      spotOriginalPosition = {
+        x: parseInt($(e).attr('data-x')),
+        y: parseInt($(e).attr('data-y'))
+      };
+      $(e).css('left', spotOriginalPosition.x);
+      $(e).css('top', spotOriginalPosition.y);
+    });
+
+  });
+  </script>
+</body>
+
+</html>

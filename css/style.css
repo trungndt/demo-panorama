@@ -1,0 +1,125 @@
+html,
+body {
+  margin: 0;
+  width: 100%;
+  height: 100%;
+  overflow: hidden;
+}
+
+.panorama {
+  width: 100%;
+  height: 100%;
+  position: relative;
+}
+
+.panorama img {
+  height: 100%;
+}
+
+.spot {
+  position: absolute;
+  z-index: 2;
+  color: red;
+  left: 500px;
+  top: 300px;
+}
+
+.pano-container {
+  position: relative;
+  width: 100%;
+  height: 100%;
+}
+
+#pano {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  transition: all .6s;
+}
+
+.blur {
+  -webkit-filter: blur(5px);
+  -moz-filter: blur(5px);
+  -o-filter: blur(5px);
+  -ms-filter: blur(5px);
+  filter: blur(5px);
+}
+
+.hand-phone {
+  width: 100%;
+  height: 700px;
+  position: absolute;
+  top: 100%;
+  left: 0;
+  transition: all .6s;
+}
+
+.hand-phone .hand {
+  background: url('../img/handphone.png') 0 0 / 100% auto no-repeat;
+  width: 100%;
+  height: 100%;
+  position: absolute;
+  top: 0;
+  left: 0;
+  z-index: 2;
+}
+
+.hand-phone .phone {
+  width: 100%;
+  height: 100%;
+  position: absolute;
+  top: 0;
+  left: 0;
+  z-index: 1;
+  background-position: 51% 50%;
+  background-size: 32% auto;
+  background-repeat: no-repeat;
+}
+
+.hand-phone.active {
+  top: 0;
+}
+
+.spot,
+.leanorama-hotspot-handle-nav {
+  text-align: center;
+  width: 30px;
+  height: 30px;
+  background-image: none;
+  /*background-color: rgba(255, 255, 255, .3);*/
+  background-color: rgba(20, 40, 160, .3);
+  transition: all .2s;
+  border: 1px solid rgba(20, 40, 160, 1);
+  border-radius: 50%;
+  cursor: pointer;
+  color: 1px solid rgba(20, 40, 160, 1);
+}
+
+.spot:before {
+  content: '+';
+  color: rgba(20, 40, 160, 1);
+  font-size: 24px;
+  line-height: 30px;
+}
+
+.spot:hover {
+  background-color: rgba(20, 40, 160, .6);
+}
+
+
+/* Paver */
+
+.paver__scroller {
+  display: none;
+}
+
+.paver--ready div.paver__pano {
+  background-size: auto 100%;
+}
+
+.swiper-container,
+.swiper-slide img {
+  height: 100%;
+}
